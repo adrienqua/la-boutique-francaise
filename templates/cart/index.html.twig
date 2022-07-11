@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}La boutique française - Panier{% endblock %}
+
+{% block content %}
+<div class="cart d-grid col-8 mx-auto text-center">
+
+  <h1>Panier</h1>
+  {% if cart is empty %}
+    <div class="text-center">
+      <p>Le panier est vide !</p>
+      <a href={{path('app_products') }} class="btn btn-primary"><i class="fa-solid fa-shopping-cart"></i> Explorer nos produits</a>
+    </div>
+  {% else %}
+    <table class="table cart text-center align-middle main-rounded">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Produit</th>
+          <th scope="col">Quantité</th>
+          <th scope="col">Prix</th>
+          <th scope="col">Total</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+            {% set total = null %}
+            {% for product in cart %}
+                <tr>
+                    <td><img src="/img/products/{{product.product.image}}"  class="img-fluid img-thumbnail" alt={{product.product.image}}></td>
+                    <td>{{product.product.name }}</td>
+                    <td>
+                        <a href={{path('app_subtract_to_cart', {'id': product.product.id})}} class=""><i class="fa-solid fa-minus"></i></a>
+                        {{product.quantity }} 
+                        <a href={{path('app_add_to_cart', {'id': product.product.id})}} class=""><i class="fa-solid fa-plus"></i></a>
+                    </td>
+                    <td>{{product.product.price }}€</td>
+                    <td>{{(product.product.price * product.quantity) |format_currency('EUR') }}</td>
+                    <td><a href={{path('app_removeItem_cart', {'id': product.product.id})}} class="remove-item"><i class="fa-solid fa-circle-xmark"></i></a></td>
+                </tr>
+                {% set total = total + product.product.price * product.quantity %}
+            {% endfor %}
+      </tbody>
+    </table>
+    <div class="order-price d-grid col-6 mx-auto">
+      <div class="order-subtotal main-rounded">
+          <div class="d-flex justify-content-between">
+              <strong>Sous total : </strong> {{total |format_currency('EUR') }} 
+          </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-4">
+      <a href={{path('app_order')}} class="btn btn-primary">Passer au paiement</a>
+    </div>
+  {% endif %}
+</div>
+
+
+
+{% endblock %}

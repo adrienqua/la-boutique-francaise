@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}La boutique française - commande {{order.reference}}{% endblock %}
+
+{% block content %}
+<div class="cart d-grid col-9 mx-auto text-center">
+
+    <h1>Commande {{order.reference}}</h1>
+    <a href={{path('app_profile')}}>Retour</a>
+    <div class="order-infos d-grid col-6 mt-3 mx-auto main-rounded">
+        <div class="d-flex justify-content-between">
+            <strong>Commande passée le : </strong> {{order.createdAt|date("m/d/Y") }} 
+        </div>
+        <div class="d-flex justify-content-between">
+            <strong>Référence : </strong> {{order.reference }} 
+        </div>
+        <div class="d-flex justify-content-between">
+            <strong>Transporteur : </strong> {{order.carrierName }} 
+        </div>
+        <div class="d-flex justify-content-between">
+            <strong>Adresse : </strong> <div class="text-end">{{order.addressName|raw}}</div>
+        </div>
+    </div>
+    <div class="order-details d-grid col-6 mx-auto">
+    <table class="table cart text-center align-middle main-rounded ">
+        <thead>
+            <tr>
+            <th scope="col">Produit</th>
+            <th scope="col">Quantité</th>
+            <th scope="col">Prix</th>
+            <th scope="col">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set total = null %}
+            {% for product in order.orderDetails %}
+                 <tr>
+                    <td>{{product.product }}</td>
+                    <td>{{product.quantity }}</td>
+                    <td>{{product.price }}€</td>
+                    <td>{{(product.price * product.quantity) |format_currency('EUR') }}</td>
+                </tr>
+            {% set total = total + product.price * product.quantity %} 
+            {% endfor %}
+            
+        </tbody>
+    </table>
+    <div>
+    <div class="order-price">
+        <div class="order-subtotal main-rounded">
+            <div class="d-flex justify-content-between">
+                <strong>Sous total : </strong> {{total |format_currency('EUR') }} 
+            </div>
+            <div class="d-flex justify-content-between">
+                <strong>Livraison :  </strong> {{order.carrierPrice |format_currency('EUR') }}
+            </div>
+        </div>
+        <div class="order-total main-rounded d-flex justify-content-between">
+            <strong>Total payé (TTC) : </strong> {{(total + order.carrierPrice) |format_currency('EUR') }}
+        </div>
+    </div>
+    </div>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}La boutique française - Ma commande{% endblock %}
+
+{% block content %}
+    <div class="order">
+        <h1>Ma commande</h1>
+        <div class="row">
+            <div class="orderForm col-md-6">
+                {% set formatHtml %}
+                    {{form_start(form, {action:path('app_order_validate')})}}
+                        {{form_row(form.address)}}
+                        {{form_row(form.carrier)}}
+                    <div class="text-center">
+                        {{form_row(form.submit)}}
+                    </div>
+                    {{form_end(form)}}
+                {% endset %}
+                {{ formatHtml|replace({'[br]' : '<br/>'})|raw }}
+            </div>
+            <div class="order-details col-md-6 mt-1">
+                <strong>Votre panier</strong>
+                <table class="table cart text-center align-middle mt-2">
+                    <thead>
+                        <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Produit</th>
+                        <th scope="col">Quantité</th>
+                        <th scope="col">Prix</th>
+                        <th scope="col">Total</th>
+                        <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% set total = null %}
+                        {% for orderDetail in orderDetails %}
+                            <tr>
+                                <td><img src="/img/products/{{orderDetail.product.image}}"  class="img-fluid img-thumbnail" alt={{orderDetail.product.image}}></td>
+                                <td>{{orderDetail.product.name }}</td>
+                                <td>
+                                    <a href={{path('app_subtract_to_cart', {'id': orderDetail.product.id})}} class=""><i class="fa-solid fa-minus"></i></a>
+                                    {{orderDetail.quantity }} 
+                                    <a href={{path('app_add_to_cart', {'id': orderDetail.product.id})}} class=""><i class="fa-solid fa-plus"></i></a>
+                                </td>
+                                <td>{{orderDetail.product.price }}€</td>
+                                <td>{{(orderDetail.product.price * orderDetail.quantity) |format_currency('EUR') }}</td>
+                                <td><a href={{path('app_removeItem_cart', {'id': orderDetail.product.id})}} class="remove-item"><i class="fa-solid fa-circle-xmark"></i></a></td>
+                            </tr>
+                        {% set total = total + orderDetail.product.price * orderDetail.quantity %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="order-price d-grid col-6 mx-auto">
+                <div class="order-subtotal main-rounded">
+                    <div class="d-flex justify-content-between">
+                        <strong>Sous total : </strong> {{total |format_currency('EUR') }} 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

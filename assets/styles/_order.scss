@@ -1,0 +1,25 @@
+.order{
+    .form-check{
+        background-color: #fff;
+        padding: 20px;
+        padding-left: 50px;
+        border-radius: 6px;
+        margin-bottom: 5px;
+        label{
+            cursor: pointer;
+            width: 100%;
+        }
+    }
+    .order-details{
+        table{
+            background-color: #fff;
+            border-radius: 6px;
+        }
+    }
+    legend{
+        font-weight: bold;
+    }
+
+
+
+}

@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}La boutique française - Paiement refusé {% endblock %}
+
+
+{% block content %}
+    <div class="order-cancel">
+        <h1>Votre paiement a été refusé</h1>
+        <div class="row">
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">Votre paiement a été refusé.</h4>
+                <p>Vérifiez la validité de votre moyen de paiement.</p>
+                <hr>
+                <a href={{path('app_cart')}}>Retour au panier</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

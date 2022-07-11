@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}La boutique française - Paiement accepté {% endblock %}
+
+
+{% block content %}
+    <div class="order-success text-center">
+        <div class="row">
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">Votre paiement a été accepté !</h4>
+                <p>Nous vous remercions pour votre commande <strong>{{order.reference}}</strong>.</p>
+                <p>Une confirmation vient de vous être envoyée par email à l'adresse <strong>{{order.user.email}}</strong>.</p>
+                <p>Votre commande sera livrée par <strong>{{order.carrierName}}</strong> à l'adresse :<br>
+                {{order.addressName|raw}}
+                </p>
+                <hr>
+                <p>Vous pouvez suivre votre commande sur votre <a href={{path('app_profile')}}>compte</a></p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

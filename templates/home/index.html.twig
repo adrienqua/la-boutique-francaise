@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block carousel %} {% endblock %}
+
+{% block content %}
+    <div class="col-md-12 row products products-featured text-center">
+        <h1>Nos meilleures ventes </h1>
+         {% for product in featuredProducts %}
+            <div class="product text-center col-lg-3 col-md-4 col-sm-6 g-2">
+            <div class="g-2">
+                <div class="card text-black">
+                    <a href={{path('app_product_details', {'id': product.id})}}>
+                        <div class="img-container">
+                        {% if product.image is not empty %}
+                            <img src="/img/products/{{product.image}}" class="card-img-top " alt={{product.image}}>
+                            
+                        {% else %}
+                            <i class="fa-solid fa-image align-self-center"></i>
+                        {% endif %}
+                        </div>
+                        <div class="card-body">
+                            <div class="text-center">
+                            <h5 class="card-title"><a href={{path('app_product_details', {'id': product.id})}}>{{product.name}}</a></h5>
+                            <p class="mb-2">{{product.price|format_currency('EUR') }}</p>
+                            </div>
+                            <div class="text-center">
+                                <a href={{path('app_add_to_cart', {'id': product.id})}} class="btn btn-primary">Ajouter au panier</a>
+                            </div>
+                            
+                        </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        {% endfor %} 
+    </div>
+{% endblock %}
+
+

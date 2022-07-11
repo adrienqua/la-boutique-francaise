@@ -1,0 +1,54 @@
+@import "carousel";
+@import "cart";
+@import "custom";
+@import "products";
+@import "order";
+@import "vars";
+@import "~bootstrap/scss/bootstrap";
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts'; 
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+
+body {
+    background-color: $background;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0;
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .page{
+        flex-grow: 1;
+    }
+
+    #homeSlider{
+        margin-bottom: 0;
+        .carousel-item{
+            background-size: cover;
+            background-position: center;
+            .carousel-caption{
+                text-align: left;
+                margin-bottom: 50px;
+                margin-left: 50px;
+            }
+        }
+    }
+
+    .main-rounded{
+        background-color: #fff;
+        border-radius: 6px;
+        margin-bottom: 5px;
+        padding: 20px;
+    }
+    
+    footer{
+        background-color: $lightgrey;
+        color: $black;
+        padding: 8px;
+    }
+
+}

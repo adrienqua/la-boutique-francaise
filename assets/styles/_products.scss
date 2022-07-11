@@ -1,0 +1,53 @@
+@import "vars";
+
+.products{
+    .product{
+        .card{
+            min-height: 370px;
+            .card-title a {
+                text-decoration: unset;
+                color: $black
+            }
+            &:hover{
+                cursor: pointer;
+                img{
+                    transform: scale(1.1)
+                }
+            }
+        }
+        .img-container{
+            min-height: 200px;
+            background-color: #fefefe;
+            font-size: 80px;
+            color: #f0f0f0;
+            max-width: 100%;
+            overflow: hidden;
+            border-radius: 6px;
+            img{
+                max-height: 200px;
+                width: auto;
+                transition: .3s;
+            }
+        }
+        
+    }
+}
+
+.product-details{
+    .img-container {
+        img {
+            max-width: 100%;
+        }
+    }
+}
+
+.categories {
+    margin-top: 30px;
+    li a {
+        text-decoration: none;
+        color: $black;
+        &:hover {
+            color: $primary
+        }
+    }
+}

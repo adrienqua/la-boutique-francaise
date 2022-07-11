@@ -2,7 +2,9 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="La boutique française - 100% made in France.">
+        <title>{% block title %}La boutique française{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
@@ -12,8 +14,96 @@
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
+
+        {% block custom_js %}
+        {% endblock %}
+
     </head>
+    {% block body %}
     <body>
-        {% block body %}{% endblock %}
+        {% block header %}
+            <header>
+                <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href={{path('homepage')}}>La boutique française</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href={{path('app_products')}}>Produits</a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav ms-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href={{path('app_cart')}}><i class="fa-solid fa-cart-shopping"></i></a>
+                                </li>
+                                {% if app.user %}
+                                    <li class="nav-item">
+                                        <a class="nav-link" href={{path('app_profile')}}>Mon compte</a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link" href={{path('app_logout')}}>Déconnexion</a>
+                                    </li>
+                                {% else %}
+                                    <li class="nav-item">
+                                        <a class="nav-link" href={{path('app_login')}}>Connexion</a>
+                                    </li>
+                                {% endif %}
+                            
+                            
+                        </ul>
+                    </div>
+                </div>
+
+                </nav>
+            </header>
+        {% endblock %}
+          
+            {% if block("carousel") is defined %}
+                <div id="homeSlider" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#homeSlider" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#homeSlider" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    </div>
+                    <div class="carousel-inner">
+                    {% for key, slider in sliders %}
+                        <div class="carousel-item {{key == 0 ? 'active' : ''}}" 
+                             style="background-image:  linear-gradient(15deg, rgba(0,0,0,.6) 30%, rgba(255,255,255,0) 100%), url('img/sliders/{{slider.image}}')">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h3>{{slider.title}}</h3>
+                                <p>{{slider.subtitle}}</p>
+                                <a href="{{slider.buttonLink}}" class="btn btn-primary">{{slider.buttonText}}</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#homeSlider" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#homeSlider" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div> 
+
+            {% endif %}
+             <main role="main" class="page container mt-5 mb-4">
+                <div class="content  ">
+                    {% block content %}
+                
+                    {% endblock %}
+                </div>
+            </main>
+
+        {% block footer %}
+            <footer class="text-center  align-center">
+                <span>&copy; Adrien Quacchia - 2021</span>
+            </footer>
+         {% endblock %}
+        
     </body>
+    {% endblock %}
 </html>

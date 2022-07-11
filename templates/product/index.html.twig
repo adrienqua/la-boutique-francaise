@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}La boutique française - Produits{% endblock %}
+
+{% block content %}
+
+    <div class="products">
+          
+        <div class="row">
+            <div class="col-md-3">
+                <div class="categories mb-4">
+                    <strong>Catégories</strong>
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href={{path('app_products')}}>Tous les produits</a></li>
+                        {% for category in categories %}
+                                <li class="list-group-item"><a href={{path('app_product_category', {'id': category.id})}}>{{category.name}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-9 row products">
+                <h1>{{category is defined ? category.name : 'Tous les produits'}} </h1>
+                {% for product in products %}
+                    <div class="product text-center col-lg-4 col-md-6 col-sm-6 g-2">
+                    <div class="g-2">
+                        <div class="card text-black">
+                            <a href={{path('app_product_details', {'id': product.id})}}>
+                                <div class="img-container">
+                                {% if product.image is not empty %}
+                                    <img src="/img/products/{{product.image}}" class="card-img-top " alt={{product.image}}>
+                                    
+                                {% else %}
+                                    <i class="fa-solid fa-image align-self-center"></i>
+                                {% endif %}
+                                </div>
+                                <div class="card-body">
+                                    <div class="text-center">
+                                    <h5 class="card-title"><a href={{path('app_product_details', {'id': product.id})}}>{{product.name}}</a></h5>
+                                    <p class="mb-2">{{product.price|format_currency('EUR') }}</p>
+                                    </div>
+                                    <div class="text-center">
+                                        <a href={{path('app_add_to_cart', {'id': product.id})}} class="btn btn-primary">Ajouter au panier</a>
+                                    </div>
+                                    
+                                </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
