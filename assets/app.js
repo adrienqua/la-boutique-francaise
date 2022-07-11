@@ -10,8 +10,5 @@ import './styles/app.scss';
 
 import * as bootstrap from 'bootstrap';
 
-window.bootstrap = bootstrap;
-
-console.log(carousel)
 // start the Stimulus application
 import './bootstrap';
